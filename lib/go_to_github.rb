@@ -63,7 +63,7 @@ module Redcar
           path = Project::Manager.focussed_project.path
           file = document.path[path.size,document.path.size]
           branch = `cd #{path} && git branch --no-color 2> /dev/null`.match(/\*\ (.*)\n/)[1]
-          remote = `cd #{path} && git remote`.gsub("\n", "")        
+          remote = `cd #{path} && git config --get branch.#{branch}.remote`.chomp
           project_name = `cd #{path} && git config --get remote.#{remote}.url`.match(/github.com[:|\/](.*)\.git\n/)[1]                                        
           
           raise unless branch && remote && project_name
